@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function About() {
+export default function About(props) {
 
     const [mystyle, setMyStyle] = useState(
       {
@@ -13,25 +13,42 @@ export default function About() {
 
     
     let  toggleStyle  = () => {
-        if (mystyle.color == "white"){
+        if (mystyle.color === "white"){
           setBtntext("Enable Dark Mode")
           setMyStyle(
             {
               backgroundColor:"white",
               color:"black"
+            }
+            )
+            props.showalert("Dark mode disabled","success")
+            document.title = `Textutils-Light mode`
           }
-          )
-        }
-        else{
-          setBtntext("Disable Dark Mode")
-          setMyStyle(
-            {
-              backgroundColor:"grey",
-              color:"white"
+          else{
+            setBtntext("Disable Dark Mode")
+            setMyStyle(
+              {
+                backgroundColor:"grey",
+                color:"white"
+              }
+              )
+              props.showalert("Dark mode enabled","success")
+            }
           }
-          )
-        }
-      }
+          
+          function changeStyle(color, name){
+            setMyStyle(
+              {
+                backgroundColor: color,
+                color:"white"
+              }
+              )
+              props.showalert(name +" has been set","success")
+              setBtntext("Disable Dark Mode")
+            }
+            
+            
+
   return (
     <div className="container" style={mystyle}>
         <h1>About Us</h1>
@@ -73,6 +90,9 @@ export default function About() {
     </div>
   </div>
   <button className="btn btn-primary m-3" onClick={toggleStyle}>{btntext}</button>
+  <button className="btn btn-success m-3 color-disc " onClick={() => {changeStyle("#003900","green")}}></button>
+  <button className="btn btn-danger m-3 color-disc " onClick={() => {changeStyle("rgb(57, 0, 0)","red")}}></button>
+  <button className="btn btn-warning m-3 color-disc " onClick={() => {changeStyle("rgb(57, 48, 0)","yellow")}}></button>
 </div>
     </div>
   )
